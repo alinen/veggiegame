@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Attack of the Killer Vegetables</title>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+<script type="text/javascript" src="AssetMgr.js"></script>
+<script>
+var theAssetMgr = new AssetMgr();
+var lastTime = 0;
+var pos = {x:0, y:0};
+var vel = {x:500, y:300};
+var size = 0.1;
+
+function tick() 
+{
+    var timeNow = new Date().getTime();
+    var dt = (timeNow - lastTime) * 0.00005;
+    lastTime = timeNow;
+
+    pos.x += vel.x * dt;
+    pos.y += vel.y * dt;
+    size += dt*10;
+
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    if (pos.x > canvas.width && pos.y > canvas.height) {
+        pos.x = 0;
+        pos.y = 0;
+        size = 0.5;
+    }
+
+    ctx.clearRect(0,0, canvas.width, canvas.height);
+    var w = (canvas.width - theAssetMgr.width(theAssetMgr.TITLE_PAGE)) * 0.5;
+    var h = (canvas.height - theAssetMgr.height(theAssetMgr.TITLE_PAGE)) * 0.5;
+    theAssetMgr.drawAsset(ctx, theAssetMgr.TITLE_PAGE, w, h);
+    theAssetMgr.drawAsset(ctx, theAssetMgr.TITLE_TOMATO, pos.x, pos.y, size);
+
+    var message = 'Press any key to begin';
+    ctx.font = '14px Arial';
+    ctx.fillStyle = '#FF0000';
+    var metrics = ctx.measureText(message);
+    ctx.fillText(message, (canvas.width-metrics.width)*0.5, theAssetMgr.height(theAssetMgr.TITLE_PAGE));    
+
+    //drawScene();
+    //animate();
+    //updateGame();
+    //updateHUD();
+
+    window.requestAnimationFrame(tick);
+}
+
+function handleKeyDown() {
+}
+
+function handleMouseMove() {
+}
+
+function handleMouseDown() {
+}
+
+function launchGame() {
+    theAssetMgr.loadAssets();
+
+    lastTime = new Date().getTime();
+    document.onkeydown = handleKeyDown;
+    document.onmousemove = handleMouseMove;
+    document.onmousedown = handleMouseDown;
+
+    window.requestAnimationFrame(tick);
+}
+
+</script>
+</head>
+<body style="background:#000000" onload="launchGame();">
+<canvas id="canvas" width="349" height="307"></canvas>
+<!---
+<img src="imgs/scene1.png">
+<img id="band-aidH" src="imgs/band-aidHT.gif" style="visibility: hidden">
+<img id="band-aidV" src="imgs/band-aidVT.gif" style="visibility: hidden">
+<img id="bigPeaLeftOpen" src="imgs/bigPeaLeftClosedT.gif" style="visibility: hidden">
+<img id="bigPeaLeftClosed" src="imgs/bigPeaLeftOpenT.gif" style="visibility: hidden">
+<img id="bigPeaRightOpen" src="imgs/bigPeaRightOpenT.gif" style="visibility: hidden">
+<img id="bigPeaRightClosed" src="imgs/bigPeaRightClosedT.gif" style="visibility: hidden">
+<img id="buildings" src="imgs/buildingsT.png" style="visibility: hidden">
+<img id="car" src="imgs/carT.gif" style="visibility: hidden">
+<img id="explosion" src="imgs/ExplosionT.png" style="visibility: hidden">
+<img id="broccoli" src="imgs/killerBroccoliT.gif" style="visibility: hidden">
+<img id="carrot" src="imgs/killerCarrotT.gif" style="visibility: hidden">
+<img id="eggplant" src="imgs/killerEggplantT.gif" style="visibility: hidden">
+<img id="hotpepper" src="imgs/killerHotpepperT.gif" style="visibility: hidden">
+<img id="onion" src="imgs/killerOnionT.gif" style="visibility: hidden">
+<img id="pea" src="imgs/killerPeaT.gif" style="visibility: hidden">
+<img id="tomato" src="imgs/killerTomatoT.gif" style="visibility: hidden">
+<img id="missile" src="imgs/missileT.gif" style="visibility: hidden">
+<img id="title" src="imgs/titlePage.png" style="visibility: hidden">
+<img id="titleTomato" src="imgs/demoTomatoT.png" style="visibility: hidden">
+--->
+</body>
+</html>
+
