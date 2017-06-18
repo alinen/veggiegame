@@ -57,6 +57,7 @@ class AssetMgr
             this.images[i] = null;
         }
 
+        this.load(this.SCENE, 'imgs/scene1.png');
         this.load(this.BANDAID_H, 'imgs/band-aidHT.gif');
         this.load(this.BANDAID_V, 'imgs/band-aidVT.gif');
         this.load(this.BIGPEA_LEFT_CLOSED, 'imgs/bigPeaLeftClosedT.gif');
