@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" backgroundGradientColors="[0xFFFFFF, 0xFFFFFF]" xmlns:v="veggies.*" height="600">
+  <v:Game id="VegieGame" width="636" height="456"/>
+  <!--<v:LogPanel id="LogArea" visible="true" width="636" height="456"/>-->
+</mx:Application>
+
