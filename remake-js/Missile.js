@@ -1,17 +1,12 @@
-class Missile
+class Missile extends Entity
 {      
-    constructor(assetMgr, canvas) {
-        this.pos = {x:0, y:0};
-        this.vel = {x:0, y:-100};
+    constructor(type, worldW, worldH) {
+        super(type, worldW, worldH);
         this.visible = false;
-        this.width = assetMgr.width(assetMgr.CAR);
-        this.height = assetMgr.height(assetMgr.CAR);
     }
 
-    reset(x, y) {
-        this.visible = true;
-        this.pos.x = x;
-        this.pos.y = y;
+    reset() {
+        this.visible = false;
     }
 
     /*
@@ -21,13 +16,10 @@ class Missile
      visible = false;
     }*/
 
-    update(dt)
+    _update(dt)
     {
-       if (this.visible)
-       {
-          this.pos.y += this.vel.y*dt;
-          this.pos.x += this.vel.x*dt;
-          if (this.pos.y < 0) this.visible = false;
-       }
+        if (this.pos.y < 0) {
+            this.visible = false;
+        }
     }
 }

@@ -1,23 +1,18 @@
-class KillerVeggie {      
+class KillerVeggie extends Entity {      
 
-    constructor(type, assetMgr, canvas) {
-        this.type = type;
+    constructor(type, worldW, worldH) {
+        super(type, worldW, worldH);
         this.speed = 500.0;
-        this.mass = 1.0;
-        this.pos = {x:0, y:0};
-        this.vel = {x:0, y:0};
-        this.width = assetMgr.width(type);
-        this.height = assetMgr.height(type);
-        this.worldWidth = canvas.width;
-        this.worldHeight = canvas.height;
     }
 
     reset() {
         this.pos.x = Math.random()*this.worldWidth;
         this.pos.y = 0;
+
         var angle = Math.random()*Math.PI;
         this.vel.x = this.speed*Math.cos(angle);
         this.vel.y = this.speed*Math.sin(angle);
+
         this.visible = true;
         this.alive = true;
     }
@@ -29,9 +24,7 @@ class KillerVeggie {
      if (isFalling()) startFall();
   }*/
 
-    update(dt) {
-        if (!this.visible) return;
-
+    _update(dt) {
         // Ensure speed stays below maximum
         if (this.vel.y > 0 && this.pos.y+this.height > this.worldHeight) 
         {
@@ -55,13 +48,6 @@ class KillerVeggie {
            this.vel.x = -this.vel.x;
            this.pos.x = 0;
         }
-
-        this.pos.x += this.vel.x*dt; 
-        this.pos.y += this.vel.y*dt; 
-    }
-
-    draw(ctx, assetMgr) {
-        assetMgr.drawAsset(ctx, this.type, this.pos.x, this.pos.y);
     }
 }
 

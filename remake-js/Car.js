@@ -1,25 +1,15 @@
-class Car { 
+class Car extends Entity { 
     
-    constructor(assetMgr, canvas) {
-        this.pos= {x:0, y:0};
-        this.vel= {x:0, y:0};
-        this.width = assetMgr.width(assetMgr.CAR);
-        this.height = assetMgr.height(assetMgr.CAR);
-        this.worldWidth = canvas.width;
-        this.worldHeight = canvas.height;
-        this.missile = new Missile(assetMgr, canvas);
+    constructor(type, worldW, worldH) {
+        super(type, worldW, worldH);
+    }
+
+    reset() {
+        this.pos.y = this.worldHeight - this.height;
+        this.pos.x = (this.worldWidth - this.width)* 0.5;
+        this.stop();
     }
   
-    keyDown(e) {
-        if (e.key === ' ') {
-        }
-    }
-
-    reset()
-    {
-        this.missile.visible = false;
-    }
-
     moveLeft()
     {
         this.vel.x = -200;
@@ -35,19 +25,20 @@ class Car {
         this.vel.x = 0;
     }
   
+    /*
     mouseMove(e)
     {
        this.pos.x = e.x - this.width * 0.5;
        this.pos.x = Math.min(this.worldWidth-this.width, this.pos.x);
        this.pos.x = Math.max(0, this.pos.x);
     }
-  
     fireTopCannon()
     {
         var x = this.pos.x + this.width/2.0 - this.missile.width/2.0;
         var y = this.pos.y - this.height;
         this.missile.reset(x, y);
     }
+  */
   
     /*
     public function missileIntersects(target:GameObject):Boolean
@@ -62,18 +53,5 @@ class Car {
        }
        return false;
     }*/
-  
-    update(dt)
-    {
-       this.missile.update(dt);
-       this.pos.x += dt * this.vel.x;
-    }
-
-    draw(ctx, assetMgr) {
-        assetMgr.drawAsset(ctx, assetMgr.CAR, this.pos.x, this.pos.y);
-        if (this.missile.visible) {
-            assetMgr.drawAsset(ctx, assetMgr.MISSILE, this.missile.pos.x, this.missile.pos.y);
-        }
-    }
 }
   
