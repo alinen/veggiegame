@@ -5,6 +5,9 @@ class Screen {
         this.height = height;  
     }
 
+    keyUp(e) {
+    }
+
     keyDown(e) {
     }
 

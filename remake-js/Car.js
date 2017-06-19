@@ -12,12 +12,12 @@ class Car extends Entity {
   
     moveLeft()
     {
-        this.vel.x = -200;
+        this.vel.x = -800;
     }
 
     moveRight()
     {
-        this.vel.x = 200;
+        this.vel.x = 800;
     }
   
     stop()
@@ -25,20 +25,11 @@ class Car extends Entity {
         this.vel.x = 0;
     }
   
-    /*
-    mouseMove(e)
-    {
-       this.pos.x = e.x - this.width * 0.5;
-       this.pos.x = Math.min(this.worldWidth-this.width, this.pos.x);
-       this.pos.x = Math.max(0, this.pos.x);
+    _update(dt) {
+        this.pos.x = Math.min(this.worldWidth-this.width, this.pos.x);
+        this.pos.x = Math.max(0, this.pos.x);
     }
-    fireTopCannon()
-    {
-        var x = this.pos.x + this.width/2.0 - this.missile.width/2.0;
-        var y = this.pos.y - this.height;
-        this.missile.reset(x, y);
-    }
-  */
+
   
     /*
     public function missileIntersects(target:GameObject):Boolean
