@@ -4,6 +4,7 @@ class TitleScreen extends Screen {
     constructor(width, height) {
         super(width, height);
         this.message = 'Press any key to begin';
+        this.instructions = 'Left/Right keys to move; Spacebar to shoot';
     }
 
     _init() {
@@ -37,7 +38,10 @@ class TitleScreen extends Screen {
         ctx.fontStyle = 'bold';
         ctx.fillStyle = '#FF0000';
         var metrics = ctx.measureText(this.message);
-        ctx.fillText(this.message, (canvas.width-metrics.width)*0.5, assetMgr.height(assetMgr.TITLE_PAGE));
+        ctx.fillText(this.message, (canvas.width-metrics.width)*0.5, assetMgr.height(assetMgr.TITLE_PAGE)-20);
+
+        metrics = ctx.measureText(this.instructions);
+        ctx.fillText(this.instructions, (canvas.width-metrics.width)*0.5, assetMgr.height(assetMgr.TITLE_PAGE)+5);
     }
 }
 
