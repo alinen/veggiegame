@@ -14,16 +14,21 @@ class GameScreen extends Screen {
 
         this.entities.push(this.missile); 
         this.entities.push(this.car); 
-
     }
 
     _init() {
         this.carLives = 3;
         this.score = 0;
         this.level = 0;
+        this.reset();
+    }
+
+    reset() {
         for (var i = 0; i < this.entities.length; i++) {
             this.entities[i].reset();
         }        
+        this.explosions = new Array(); // for explosions
+        this.missile.visible = false;
     }
 
     keyUp(e) {
@@ -69,9 +74,63 @@ class GameScreen extends Screen {
         this.missile.visible = true;
     }
 
+    contains(pos, corner, width, height) {
+        var test = (pos.x > corner.x && pos.x < corner.x + width && 
+                    pos.y > corner.y && pos.y < corner.y + height);
+        return test;
+    }
+
+    checkIntersections(entity) {
+        var pos = entity.pos;
+        var width = entity.width;
+        var height = entity.height;
+        var corner1 = {x: pos.x, y: pos.y };
+        var corner2 = {x: pos.x+width, y:pos.y}; 
+        var corner3 = {x: pos.x+width, y:pos.y+height}; 
+        var corner4 = {x: pos.x, y:pos.y+height}; 
+
+        for (var j = 0; j < this.entities.length; j++) {
+            if (this.entities[j] === entity) continue;
+
+            // axis aligned bbox intersection test
+            var posj = this.entities[j].pos;
+            var widthj = this.entities[j].width;
+            var heightj = this.entities[j].height;
+
+            if (this.contains(corner1, posj, widthj, heightj) ||
+                this.contains(corner2, posj, widthj, heightj) ||
+                this.contains(corner3, posj, widthj, heightj) ||
+                this.contains(corner4, posj, widthj, heightj)) { 
+
+                return this.entities[j];
+            }
+        }
+        return null;
+    }
+
     update(dt) {
         for (var i = 0; i < this.entities.length; i++) {
             this.entities[i].update(dt);
+        }
+
+        if (this.missile.visible) {
+            var missileHit = this.checkIntersections(this.missile);
+            if (missileHit) {
+                missileHit.vel.x = missileHit.vel.y = 0;
+                // TODO: this.explo
+            }
+        }
+
+        var carHit = this.checkIntersections(this.car);
+        if (carHit) {
+
+            this.carLives--;
+            console.log(this.carLives+ " left");
+            if (this.carLives <= 0) {
+                this.finished = true;
+            } else {
+                this.reset();
+            }
         }
     }
 
