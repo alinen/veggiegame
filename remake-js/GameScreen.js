@@ -3,27 +3,56 @@ class GameScreen extends Screen {
     constructor(width, height) {
         super(width, height); 
 
-        this.entities = new Array();
-        for (var i = 0; i < 2; i++) {
-            this.entities.push(new KillerVeggie(theAssetMgr.KILLER_HOTPEPPER, width, height));
-            this.entities.push(new KillerVeggie(theAssetMgr.KILLER_ONION, width, height));
-        }        
+        this.levels = [
+            { 
+              enemies: [{type: theAssetMgr.KILLER_CARROT, count: 2}, {type: theAssetMgr.KILLER_TOMATO, count: 2}],
+              speed: 1
+            },
+            { 
+              enemies: [{type: theAssetMgr.KILLER_HOTPEPPER, count: 2}, {type: theAssetMgr.KILLER_ONION, count: 2}],
+              speed: 1
+            },
+            { 
+              enemies: [{type: theAssetMgr.KILLER_BROCCOLI, count: 2}, {type: theAssetMgr.KILLER_EGGPLANT, count: 2}],
+              speed: 1
+            }
+            //{ 
+            //  enemies: [{type: theAssetMgr.KILLER_PEAPOD, count: 2}, {type: theAssetMgr.KILLER_EGGPLANT, count: 2}],
+            //  speed: 1
+            //}
+        ];
+        this.currentLevel = 0;
 
         this.missile = new Missile(theAssetMgr.MISSILE, width, height);
         this.car = new Car(theAssetMgr.CAR, width, height);
 
-        this.entities.push(this.missile); 
-        this.entities.push(this.car); 
     }
 
     _init() {
         this.carLives = 3;
         this.score = 0;
-        this.level = 0;
+        this.currentLevel = 0;
         this.reset();
     }
 
     reset() {
+        this.timer = 0.1;
+
+        this.entities = new Array();
+        this.hitCount = 0;
+        this.numEnemies = 0;
+        var enemies = this.levels[this.currentLevel % this.levels.length].enemies;
+        for (var i = 0; i < enemies.length; i++) {
+            var count = enemies[i].count;
+            this.numEnemies += count;
+            var type = enemies[i].type;
+            for (var j = 0; j < count; j++) {
+                this.entities.push(new KillerVeggie(type, this.width, this.height));
+            }
+        }        
+        this.entities.push(this.missile); 
+        this.entities.push(this.car); 
+
         for (var i = 0; i < this.entities.length; i++) {
             this.entities[i].reset();
         }        
@@ -127,8 +156,16 @@ class GameScreen extends Screen {
     }
 
     update(dt) {
+        this.timer = this.timer - dt;
+        if (this.timer > 0) return;
+
         for (var i = 0; i < this.entities.length; i++) {
             this.entities[i].update(dt);
+        }
+
+        if (this.hitCount === this.numEnemies) {
+            this.currentLevel = this.currentLevel + 1;
+            this.reset();
         }
 
         for (var i = 0; i < this.explosions.length; i++) {
@@ -140,6 +177,7 @@ class GameScreen extends Screen {
             if (missileHit) {
                 missileHit.vel.x = missileHit.vel.y = 0;
                 missileHit.visible = false;
+                this.hitCount++;
                 this.missile.visible = false;
                 this.createExplosion(missileHit);
             }
@@ -169,6 +207,17 @@ class GameScreen extends Screen {
             var entity = this.explosions[i];
             if (!entity.visible) continue;
             assetMgr.drawAsset(ctx, entity.type, entity.pos.x, entity.pos.y);
+        }
+
+        if (this.timer > 0) {
+            ctx.font = '58px serif';
+            ctx.fontStyle = 'bold';
+            ctx.fillStyle = '#000000';
+            var message = 'Level '+(this.currentLevel+1);
+            var metrics = ctx.measureText(message);
+            var height = Math.floor(assetMgr.height(assetMgr.TITLE_PAGE) * 0.5 );
+            var width = Math.floor((canvas.width-metrics.width)*0.5);
+            ctx.fillText(message, width, height);        
         }
     }
 }
