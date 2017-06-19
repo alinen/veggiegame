@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Attack of the Killer Vegetables</title>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+<script type="text/javascript" src="AssetMgr.js"></script>
+<script type="text/javascript" src="Screen.js"></script>
+<script type="text/javascript" src="TitleScreen.js"></script>
+<script type="text/javascript" src="GameScreen.js"></script>
+<script type="text/javascript" src="GameOverScreen.js"></script>
+<script type="text/javascript" src="Utils.js"></script>
+<script type="text/javascript" src="Entity.js"></script>
+<script type="text/javascript" src="KillerVeggie.js"></script>
+<script type="text/javascript" src="Car.js"></script>
+<script type="text/javascript" src="Missile.js"></script>
+<script type="text/javascript" src="Explosion.js"></script>
+<script type="text/javascript" src="Peapod.js"></script>
+<script type="text/javascript" src="KillerPea.js"></script>
+<script>
+var theAssetMgr = new AssetMgr();
+var screens = new Array();
+var currentScreen = 0;
+var lastTime = 0;
+
+function tick() 
+{
+    var timeNow = new Date().getTime();
+    var dt = (timeNow - lastTime) * 0.0001;
+    lastTime = timeNow;
+
+    screens[currentScreen].update(dt);
+
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    screens[currentScreen].draw(ctx, theAssetMgr);
+
+    if (screens[currentScreen].finished) {
+        currentScreen = (currentScreen + 1) % screens.length;
+        screens[currentScreen].init();
+    }
+    
+    window.requestAnimationFrame(tick);
+}
+
+function handleKeyUp(e) {
+    // don't forget to disable vimfx!
+    screens[currentScreen].keyUp(e);
+}
+
+function handleKeyDown(e) {
+    // don't forget to disable vimfx!
+    screens[currentScreen].keyDown(e);
+}
+
+function handleMouseMove(e) {
+    screens[currentScreen].mouseMove(e);
+}
+
+function handleMouseDown(e) {
+    screens[currentScreen].mouseDown(e);
+}
+
+function launchGame() {
+    theAssetMgr.loadAssets();
+
+    var canvas = document.getElementById('canvas');
+
+    var titleScreen = new TitleScreen(canvas.width, canvas.height);
+    var gameScreen = new GameScreen(canvas.width, canvas.height);
+    var gameOverScreen = new GameOverScreen(canvas.width, canvas.height);
+
+    screens.push(titleScreen);
+    screens.push(gameScreen);
+    screens.push(gameOverScreen);
+    screens[currentScreen].init();
+
+    lastTime = new Date().getTime();
+    window.addEventListener("keyup", handleKeyUp);
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousedown", handleMouseDown);
+    window.requestAnimationFrame(tick);
+}
+
+</script>
+</head>
+<body style="background:#000000" onload="launchGame();">
+<canvas id="canvas" width="349" height="307"></canvas>
+<!---
+<img src="imgs/scene1.png">
+<img id="band-aidH" src="imgs/band-aidHT.gif" style="visibility: hidden">
+<img id="band-aidV" src="imgs/band-aidVT.gif" style="visibility: hidden">
+<img id="bigPeaLeftOpen" src="imgs/bigPeaLeftClosedT.gif" style="visibility: hidden">
+<img id="bigPeaLeftClosed" src="imgs/bigPeaLeftOpenT.gif" style="visibility: hidden">
+<img id="bigPeaRightOpen" src="imgs/bigPeaRightOpenT.gif" style="visibility: hidden">
+<img id="bigPeaRightClosed" src="imgs/bigPeaRightClosedT.gif" style="visibility: hidden">
+<img id="buildings" src="imgs/buildingsT.png" style="visibility: hidden">
+<img id="car" src="imgs/carT.gif" style="visibility: hidden">
+<img id="explosion" src="imgs/ExplosionT.png" style="visibility: hidden">
+<img id="broccoli" src="imgs/killerBroccoliT.gif" style="visibility: hidden">
+<img id="carrot" src="imgs/killerCarrotT.gif" style="visibility: hidden">
+<img id="eggplant" src="imgs/killerEggplantT.gif" style="visibility: hidden">
+<img id="hotpepper" src="imgs/killerHotpepperT.gif" style="visibility: hidden">
+<img id="onion" src="imgs/killerOnionT.gif" style="visibility: hidden">
+<img id="pea" src="imgs/killerPeaT.gif" style="visibility: hidden">
+<img id="tomato" src="imgs/killerTomatoT.gif" style="visibility: hidden">
+<img id="missile" src="imgs/missileT.gif" style="visibility: hidden">
+<img id="title" src="imgs/titlePage.png" style="visibility: hidden">
+<img id="titleTomato" src="imgs/demoTomatoT.png" style="visibility: hidden">
+--->
+</body>
+</html>
+
