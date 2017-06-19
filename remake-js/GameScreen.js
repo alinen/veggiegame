@@ -91,6 +91,7 @@ class GameScreen extends Screen {
 
         for (var j = 0; j < this.entities.length; j++) {
             if (this.entities[j] === entity) continue;
+            if (!this.entities[j].visible) continue;
 
             // axis aligned bbox intersection test
             var posj = this.entities[j].pos;
@@ -108,16 +109,39 @@ class GameScreen extends Screen {
         return null;
     }
 
+    createExplosion(entity) {
+        var explosion = null;
+        for (var i = 0; i < this.explosions.length; i++) {
+            if (!this.explosions[i].visible) {
+                explosion = this.explosions[i];
+            }
+        }
+        if (explosion === null) {
+            explosion = new Explosion(theAssetMgr.EXPLOSION, this.worldWidth, this.worldHeight);
+            this.explosions.push(explosion);
+        }
+        explosion.reset();
+        explosion.visible = true;
+        explosion.pos.x = entity.pos.x + (entity.width - explosion.width) * 0.5;
+        explosion.pos.y = entity.pos.y + (entity.height - explosion.height) * 0.5;
+    }
+
     update(dt) {
         for (var i = 0; i < this.entities.length; i++) {
             this.entities[i].update(dt);
+        }
+
+        for (var i = 0; i < this.explosions.length; i++) {
+            this.explosions[i].update(dt);
         }
 
         if (this.missile.visible) {
             var missileHit = this.checkIntersections(this.missile);
             if (missileHit) {
                 missileHit.vel.x = missileHit.vel.y = 0;
-                // TODO: this.explo
+                missileHit.visible = false;
+                this.missile.visible = false;
+                this.createExplosion(missileHit);
             }
         }
 
@@ -125,7 +149,6 @@ class GameScreen extends Screen {
         if (carHit) {
 
             this.carLives--;
-            console.log(this.carLives+ " left");
             if (this.carLives <= 0) {
                 this.finished = true;
             } else {
@@ -138,6 +161,12 @@ class GameScreen extends Screen {
         assetMgr.drawAsset(ctx, assetMgr.SCENE, 0, 0);
         for (var i = 0; i < this.entities.length; i++) {
             var entity = this.entities[i];
+            if (!entity.visible) continue;
+            assetMgr.drawAsset(ctx, entity.type, entity.pos.x, entity.pos.y);
+        }
+
+        for (var i = 0; i < this.explosions.length; i++) {
+            var entity = this.explosions[i];
             if (!entity.visible) continue;
             assetMgr.drawAsset(ctx, entity.type, entity.pos.x, entity.pos.y);
         }
