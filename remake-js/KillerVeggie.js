@@ -3,6 +3,7 @@ class KillerVeggie extends Entity {
     constructor(type, worldW, worldH) {
         super(type, worldW, worldH);
         this.speed = 500.0;
+        this.gameType = this.ENEMY;
     }
 
     reset() {
@@ -12,17 +13,9 @@ class KillerVeggie extends Entity {
         var angle = Math.random()*Math.PI;
         this.vel.x = this.speed*Math.cos(angle);
         this.vel.y = this.speed*Math.sin(angle);
-
-        this.visible = true;
         this.alive = true;
+        this.visible = true;
     }
-
-  /*
-  override public function hit():void
-  {
-     super.hit();
-     if (isFalling()) startFall();
-  }*/
 
     _update(dt) {
         // Ensure speed stays below maximum

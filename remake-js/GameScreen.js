@@ -6,20 +6,24 @@ class GameScreen extends Screen {
         this.levels = [
             { 
               enemies: [{type: theAssetMgr.KILLER_CARROT, count: 2}, {type: theAssetMgr.KILLER_TOMATO, count: 2}],
+              creatorfn: this.standardLevel,
               speed: 1
             },
             { 
               enemies: [{type: theAssetMgr.KILLER_HOTPEPPER, count: 2}, {type: theAssetMgr.KILLER_ONION, count: 2}],
+              creatorfn: this.standardLevel,
               speed: 1
             },
             { 
               enemies: [{type: theAssetMgr.KILLER_BROCCOLI, count: 2}, {type: theAssetMgr.KILLER_EGGPLANT, count: 2}],
+              creatorfn: this.standardLevel,
               speed: 1
-            }
-            //{ 
-            //  enemies: [{type: theAssetMgr.KILLER_PEAPOD, count: 2}, {type: theAssetMgr.KILLER_EGGPLANT, count: 2}],
-            //  speed: 1
-            //}
+            },
+            { 
+              enemies: [{type: theAssetMgr.KILLER_PEA, count: 5}],
+              creatorfn: this.peapodLevel,
+              speed: 1
+            }        
         ];
         this.currentLevel = 0;
 
@@ -35,21 +39,50 @@ class GameScreen extends Screen {
         this.reset();
     }
 
+    standardLevel(gs) {  //gs = this
+        var numEnemies = 0;
+        for (var i = 0; i < this.enemies.length; i++) {
+            var count = this.enemies[i].count;
+            var type = this.enemies[i].type;
+            numEnemies += count;
+            for (var j = 0; j < count; j++) {
+                gs.entities.push(new KillerVeggie(type, gs.width, gs.height));
+            }
+        }        
+        return numEnemies;
+    }
+
+    peapodLevel(gs) {
+
+        var peapod = new Peapod(gs.width, gs.height);
+        gs.entities.push(peapod);
+        peapod.setCar(gs.car);
+
+        var foreground = new Entity(theAssetMgr.BUILDINGS, gs.width, gs.height);
+        foreground.pos.y = gs.height - foreground.height;
+        gs.entities.push(foreground);
+
+        var numEnemies = 0;
+        for (var i = 0; i < this.enemies.length; i++) {
+            var count = this.enemies[i].count;
+            var type = this.enemies[i].type;
+            numEnemies += count;
+            for (var j = 0; j < count; j++) {
+                var pea = new KillerPea(type, gs.width, gs.height);
+                gs.entities.push(pea);
+                peapod.add(pea);
+            }
+        }  
+        return numEnemies;
+    }
+
     reset() {
         this.timer = 0.1;
 
         this.entities = new Array();
         this.hitCount = 0;
-        this.numEnemies = 0;
-        var enemies = this.levels[this.currentLevel % this.levels.length].enemies;
-        for (var i = 0; i < enemies.length; i++) {
-            var count = enemies[i].count;
-            this.numEnemies += count;
-            var type = enemies[i].type;
-            for (var j = 0; j < count; j++) {
-                this.entities.push(new KillerVeggie(type, this.width, this.height));
-            }
-        }        
+        var level = this.levels[this.currentLevel % this.levels.length];
+        this.numEnemies = level.creatorfn(this);
         this.entities.push(this.missile); 
         this.entities.push(this.car); 
 
@@ -121,6 +154,7 @@ class GameScreen extends Screen {
         for (var j = 0; j < this.entities.length; j++) {
             if (this.entities[j] === entity) continue;
             if (!this.entities[j].visible) continue;
+            if (this.entities[j].gameType !== this.entities[j].ENEMY) continue;
 
             // axis aligned bbox intersection test
             var posj = this.entities[j].pos;
@@ -174,8 +208,9 @@ class GameScreen extends Screen {
 
         if (this.missile.visible) {
             var missileHit = this.checkIntersections(this.missile);
-            if (missileHit) {
+            if (missileHit && missileHit.gameType === missileHit.ENEMY) {
                 missileHit.vel.x = missileHit.vel.y = 0;
+                missileHit.alive = false;
                 missileHit.visible = false;
                 this.hitCount++;
                 this.missile.visible = false;

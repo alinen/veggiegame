@@ -8,6 +8,10 @@ class Entity {
         this.worldHeight = worldHeight;
         this.width = theAssetMgr.width(type);
         this.height = theAssetMgr.height(type);
+
+        this.UNKNOWN = 0;
+        this.ENEMY = 1;
+        this.gameType = this.UNKNOWN;
     }
 
     reset() {
