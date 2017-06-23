@@ -28,15 +28,17 @@ function tick()
     var dt = (timeNow - lastTime) * 0.0001;
     lastTime = timeNow;
 
-    screens[currentScreen].update(dt);
-
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
+
+    screens[currentScreen].clear(ctx, theAssetMgr);
+    screens[currentScreen].update(dt);
     screens[currentScreen].draw(ctx, theAssetMgr);
 
     if (screens[currentScreen].finished) {
         currentScreen = (currentScreen + 1) % screens.length;
         screens[currentScreen].init();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
     
     window.requestAnimationFrame(tick);
@@ -62,6 +64,7 @@ function handleMouseDown(e) {
 
 function launchGame() {
     theAssetMgr.loadAssets();
+    while (!theAssetMgr.ready());
 
     var canvas = document.getElementById('canvas');
 
@@ -85,29 +88,8 @@ function launchGame() {
 </script>
 </head>
 <body style="background:#000000" onload="launchGame();">
-<canvas id="canvas" width="349" height="307"></canvas>
-<!---
-<img src="imgs/scene1.png">
-<img id="band-aidH" src="imgs/band-aidHT.gif" style="visibility: hidden">
-<img id="band-aidV" src="imgs/band-aidVT.gif" style="visibility: hidden">
-<img id="bigPeaLeftOpen" src="imgs/bigPeaLeftClosedT.gif" style="visibility: hidden">
-<img id="bigPeaLeftClosed" src="imgs/bigPeaLeftOpenT.gif" style="visibility: hidden">
-<img id="bigPeaRightOpen" src="imgs/bigPeaRightOpenT.gif" style="visibility: hidden">
-<img id="bigPeaRightClosed" src="imgs/bigPeaRightClosedT.gif" style="visibility: hidden">
-<img id="buildings" src="imgs/buildingsT.png" style="visibility: hidden">
-<img id="car" src="imgs/carT.gif" style="visibility: hidden">
-<img id="explosion" src="imgs/ExplosionT.png" style="visibility: hidden">
-<img id="broccoli" src="imgs/killerBroccoliT.gif" style="visibility: hidden">
-<img id="carrot" src="imgs/killerCarrotT.gif" style="visibility: hidden">
-<img id="eggplant" src="imgs/killerEggplantT.gif" style="visibility: hidden">
-<img id="hotpepper" src="imgs/killerHotpepperT.gif" style="visibility: hidden">
-<img id="onion" src="imgs/killerOnionT.gif" style="visibility: hidden">
-<img id="pea" src="imgs/killerPeaT.gif" style="visibility: hidden">
-<img id="tomato" src="imgs/killerTomatoT.gif" style="visibility: hidden">
-<img id="missile" src="imgs/missileT.gif" style="visibility: hidden">
-<img id="title" src="imgs/titlePage.png" style="visibility: hidden">
-<img id="titleTomato" src="imgs/demoTomatoT.png" style="visibility: hidden">
---->
+<img src="imgs/scene1.png" style="position: absolute; top: 0px; left: 0px;">
+<canvas id="canvas" width="349" height="307" style="position: absolute; top: 0px; left: 0px;"></canvas>
 </body>
 </html>
 
