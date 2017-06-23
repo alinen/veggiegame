@@ -234,7 +234,7 @@ class GameScreen extends Screen {
     }
 
     draw(ctx, assetMgr) {
-        assetMgr.drawAsset(ctx, assetMgr.SCENE, 0, 0);
+        //assetMgr.drawAsset(ctx, assetMgr.SCENE, 0, 0);
         for (var i = 0; i < this.entities.length; i++) {
             var entity = this.entities[i];
             if (!entity.visible) continue;

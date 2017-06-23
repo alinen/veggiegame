@@ -32,6 +32,7 @@ function tick()
 
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     screens[currentScreen].draw(ctx, theAssetMgr);
 
     if (screens[currentScreen].finished) {
@@ -74,6 +75,12 @@ function launchGame() {
     screens.push(gameOverScreen);
     screens[currentScreen].init();
 
+    var ctx = canvas.getContext('2d');
+    screens[currentScreen].draw(ctx, theAssetMgr);
+
+    var background = document.getElementById('background');
+    background.style.visibility = 'visible';
+
     lastTime = new Date().getTime();
     window.addEventListener("keyup", handleKeyUp);
     window.addEventListener("keydown", handleKeyDown);
@@ -85,7 +92,8 @@ function launchGame() {
 </script>
 </head>
 <body style="background:#000000" onload="launchGame();">
-<canvas id="canvas" width="349" height="307"></canvas>
+<img id="background" src="imgs/scene1.png" style="position: absolute; top: 0px; left: 0px; visibility: hidden">
+<canvas id="canvas" width="349" height="307" style="position: absolute; top: 0px; left: 0px"></canvas>
 <!---
 <img src="imgs/scene1.png">
 <img id="band-aidH" src="imgs/band-aidHT.gif" style="visibility: hidden">
