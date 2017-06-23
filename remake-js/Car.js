@@ -2,11 +2,12 @@ class Car extends Entity {
     
     constructor(type, worldW, worldH) {
         super(type, worldW, worldH);
+        this.visible = true;
     }
 
     reset() {
-        this.pos.y = this.worldHeight - this.height;
-        this.pos.x = (this.worldWidth - this.width)* 0.5;
+        this.pos.y = this.worldHeight - this.height();
+        this.pos.x = (this.worldWidth - this.width())* 0.5;
         this.stop();
     }
   
@@ -26,7 +27,8 @@ class Car extends Entity {
     }
   
     _update(dt) {
-        this.pos.x = Math.min(this.worldWidth-this.width, this.pos.x);
+        this.pos.y = this.worldHeight - this.height();
+        this.pos.x = Math.min(this.worldWidth-this.width(), this.pos.x);
         this.pos.x = Math.max(0, this.pos.x);
     }
 

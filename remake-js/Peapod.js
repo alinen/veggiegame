@@ -19,7 +19,7 @@ class Peapod extends Entity {
 
     reset() {
         this.pos.x = 0;
-        this.pos.y = this.worldHeight - this.height;
+        this.pos.y = this.worldHeight - this.height();
         this.vel.x = 500;
         this.type = theAssetMgr.BIGPEA_RIGHT_OPEN;
         this.elapsedTime = 0;
@@ -31,15 +31,15 @@ class Peapod extends Entity {
     update(dt) {
         this.elapsedTime += dt;
         this.pos.x += this.vel.x*dt;
-        if  (this.vel.x > 0 && this.pos.x+this.width > this.worldWidth) {
+        if  (this.vel.x > 0 && this.pos.x+this.width() > this.worldWidth) {
            this.vel.x = -this.vel.x;
-           this.pos.x = this.worldWidth - this.width;
+           this.pos.x = this.worldWidth - this.width();
         } else if (this.vel.x < 0 && this.pos.x < 0) {
            this.vel.x = -this.vel.x;
            this.pos.x = 0;
         }
 
-        this.pos.y = this.worldHeight - this.height - 25*(Math.sin(Math.PI/180*this.elapsedTime*500)+1);
+        this.pos.y = this.worldHeight - this.height() - 25*(Math.sin(Math.PI/180*this.elapsedTime*500)+1);
         if (this.launchCount < this.peas.length && this.launchPea(dt, this.car.pos)) {
             this.launchCount++;
         }

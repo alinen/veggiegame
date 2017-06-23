@@ -3,27 +3,26 @@ class AssetMgr
 {
     constructor() {
         this.SCENE = 0;
-        this.BUILDINGS = 1;
-        this.BANDAID_H = 2;
-        this.BANDAID_V = 3;
-        this.BIGPEA_LEFT_CLOSED = 4;
-        this.BIGPEA_LEFT_OPEN = 5;
-        this.BIGPEA_RIGHT_OPEN = 6;
-        this.BIGPEA_RIGHT_CLOSED = 7;
-        this.BUILDINGS = 8;
-        this.CAR = 9;
-        this.EXPLOSION = 10;
-        this.KILLER_BROCCOLI = 11;
-        this.KILLER_CARROT = 12;
-        this.KILLER_EGGPLANT = 13;
-        this.KILLER_HOTPEPPER = 14;
-        this.KILLER_ONION = 15;
-        this.KILLER_PEA = 16;
-        this.KILLER_TOMATO = 17;
-        this.MISSILE = 18;
-        this.TITLE_TOMATO = 19;
-        this.TITLE_PAGE = 20;
-        this.NUM_IMAGES = 21;
+        this.BANDAID_H = 1;
+        this.BANDAID_V = 2;
+        this.BIGPEA_LEFT_CLOSED = 3;
+        this.BIGPEA_LEFT_OPEN = 4;
+        this.BIGPEA_RIGHT_OPEN = 5;
+        this.BIGPEA_RIGHT_CLOSED = 6;
+        this.BUILDINGS = 7;
+        this.CAR = 8;
+        this.EXPLOSION = 9;
+        this.KILLER_BROCCOLI = 10;
+        this.KILLER_CARROT = 11;
+        this.KILLER_EGGPLANT = 12;
+        this.KILLER_HOTPEPPER = 13;
+        this.KILLER_ONION = 14;
+        this.KILLER_PEA = 15;
+        this.KILLER_TOMATO = 16;
+        this.MISSILE = 17;
+        this.TITLE_TOMATO = 18;
+        this.TITLE_PAGE = 19;
+        this.NUM_IMAGES = 20;
 
         this.images = new Array(this.NUM_IMAGES);
     }

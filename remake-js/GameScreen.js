@@ -26,7 +26,6 @@ class GameScreen extends Screen {
             }        
         ];
         this.currentLevel = 0;
-        this.speedFactor = 1.0;
 
         this.missile = new Missile(theAssetMgr.MISSILE, width, height);
         this.car = new Car(theAssetMgr.CAR, width, height);
@@ -34,6 +33,7 @@ class GameScreen extends Screen {
     }
 
     _init() {
+        this.speedFactor = 1.0;
         this.carLives = 1;
         this.score = 0;
         this.currentLevel = 0;
@@ -60,7 +60,7 @@ class GameScreen extends Screen {
         peapod.setCar(gs.car);
 
         var foreground = new Entity(theAssetMgr.BUILDINGS, gs.width, gs.height);
-        foreground.pos.y = gs.height - foreground.height;
+        foreground.pos.y = gs.height - foreground.height();
         gs.entities.push(foreground);
 
         var numEnemies = 0;
@@ -130,8 +130,8 @@ class GameScreen extends Screen {
   */    
     fireCannon()
     {
-        var x = this.car.pos.x + (this.car.width - this.missile.width) * 0.5;
-        var y = this.car.pos.y - this.missile.height;
+        var x = this.car.pos.x + (this.car.width() - this.missile.width()) * 0.5;
+        var y = this.car.pos.y - this.missile.height();
         this.missile.pos.x = x; 
         this.missile.pos.y = y; 
         this.missile.visible = true;
@@ -145,8 +145,8 @@ class GameScreen extends Screen {
 
     checkIntersections(entity) {
         var pos = entity.pos;
-        var width = entity.width;
-        var height = entity.height;
+        var width = entity.width();
+        var height = entity.height();
         var corner1 = {x: pos.x, y: pos.y };
         var corner2 = {x: pos.x+width, y:pos.y}; 
         var corner3 = {x: pos.x+width, y:pos.y+height}; 
@@ -159,8 +159,8 @@ class GameScreen extends Screen {
 
             // axis aligned bbox intersection test
             var posj = this.entities[j].pos;
-            var widthj = this.entities[j].width;
-            var heightj = this.entities[j].height;
+            var widthj = this.entities[j].width();
+            var heightj = this.entities[j].height();
 
             if (this.contains(corner1, posj, widthj, heightj) ||
                 this.contains(corner2, posj, widthj, heightj) ||
@@ -186,8 +186,8 @@ class GameScreen extends Screen {
         }
         explosion.reset();
         explosion.visible = true;
-        explosion.pos.x = entity.pos.x + (entity.width - explosion.width) * 0.5;
-        explosion.pos.y = entity.pos.y + (entity.height - explosion.height) * 0.5;
+        explosion.pos.x = entity.pos.x + (entity.width() - explosion.width()) * 0.5;
+        explosion.pos.y = entity.pos.y + (entity.height() - explosion.height()) * 0.5;
     }
 
     update(dt) {
