@@ -5,7 +5,7 @@ class GameScreen extends Screen {
 
         this.levels = [
             { 
-              enemies: [{type: theAssetMgr.KILLER_CARROT, count: 2}, {type: theAssetMgr.KILLER_TOMATO, count: 2}],
+              enemies: [{type: theAssetMgr.KILLER_CARROT, count: 20}, {type: theAssetMgr.KILLER_TOMATO, count: 20}],
               creatorfn: this.standardLevel,
               speed: 1
             },
@@ -37,6 +37,7 @@ class GameScreen extends Screen {
         this.carLives = 1;
         this.score = 0;
         this.currentLevel = 0;
+        this.messageSize = null;
         this.reset();
     }
 
@@ -130,11 +131,7 @@ class GameScreen extends Screen {
   */    
     fireCannon()
     {
-        var x = this.car.pos.x + (this.car.width() - this.missile.width()) * 0.5;
-        var y = this.car.pos.y - this.missile.height();
-        this.missile.pos.x = x; 
-        this.missile.pos.y = y; 
-        this.missile.visible = true;
+        this.missile.fire(this.car);
     }
 
     contains(pos, corner, width, height) {
@@ -215,8 +212,8 @@ class GameScreen extends Screen {
                 missileHit.vel.x = missileHit.vel.y = 0;
                 missileHit.alive = false;
                 missileHit.visible = false;
-                this.hitCount++;
                 this.missile.visible = false;
+                this.hitCount++;
                 this.createExplosion(missileHit);
             }
         }
@@ -233,8 +230,27 @@ class GameScreen extends Screen {
         }
     }
 
+    clear(ctx, assetMgr) {
+        for (var i = 0; i < this.entities.length; i++) {
+            var entity = this.entities[i];
+            //if (entity.type !== theAssetMgr.MISSILE && !entity.visible) continue;
+            ctx.clearRect(entity.pos.x-2, entity.pos.y-2, entity.width()+4, entity.height()+4);
+        }
+
+        for (var i = 0; i < this.explosions.length; i++) {
+            var entity = this.explosions[i];
+            if (!entity.visible) continue;
+            ctx.clearRect(entity.pos.x-2, entity.pos.y-2, entity.width()+4, entity.height()+4);
+        }
+
+        if (this.messageSize !== null) {
+            ctx.clearRect(this.messageSize.x, this.messageSize.y, this.messageSize.width, this.messageSize.height);
+            this.messageSize = null;
+        }
+    }
+
     draw(ctx, assetMgr) {
-        assetMgr.drawAsset(ctx, assetMgr.SCENE, 0, 0);
+        //assetMgr.drawAsset(ctx, assetMgr.SCENE, 0, 0);
         for (var i = 0; i < this.entities.length; i++) {
             var entity = this.entities[i];
             if (!entity.visible) continue;
@@ -253,9 +269,10 @@ class GameScreen extends Screen {
             ctx.fillStyle = '#000000';
             var message = 'Level '+(this.currentLevel+1);
             var metrics = ctx.measureText(message);
-            var height = Math.floor(assetMgr.height(assetMgr.TITLE_PAGE) * 0.5 );
-            var width = Math.floor((canvas.width-metrics.width)*0.5);
-            ctx.fillText(message, width, height);        
+            var y = Math.floor(assetMgr.height(assetMgr.TITLE_PAGE) * 0.5 );
+            var x = Math.floor((canvas.width-metrics.width)*0.5);
+            ctx.fillText(message, x, y);        
+            this.messageSize = {x: x, y:y-58, width:metrics.width, height:58};
         }
     }
 }

@@ -28,7 +28,8 @@ class TitleScreen extends Screen {
     }
 
     draw(ctx, assetMgr) {
-        ctx.clearRect(0,0, canvas.width, canvas.height);
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(0,0, canvas.width, canvas.height);
         var w = (canvas.width - assetMgr.width(assetMgr.TITLE_PAGE)) * 0.5;
         var h = (canvas.height - assetMgr.height(assetMgr.TITLE_PAGE)) * 0.5;
         assetMgr.drawAsset(ctx, assetMgr.TITLE_PAGE, w, h);

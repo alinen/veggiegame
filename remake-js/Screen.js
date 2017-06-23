@@ -30,5 +30,9 @@ class Screen {
 
     draw(ctx, assetMgr) {
     }
+
+    clear(ctx, assetMgr) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
 }
 
