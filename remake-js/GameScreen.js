@@ -26,6 +26,7 @@ class GameScreen extends Screen {
             }        
         ];
         this.currentLevel = 0;
+        this.speedFactor = 1.0;
 
         this.missile = new Missile(theAssetMgr.MISSILE, width, height);
         this.car = new Car(theAssetMgr.CAR, width, height);
@@ -33,7 +34,7 @@ class GameScreen extends Screen {
     }
 
     _init() {
-        this.carLives = 3;
+        this.carLives = 1;
         this.score = 0;
         this.currentLevel = 0;
         this.reset();
@@ -194,11 +195,13 @@ class GameScreen extends Screen {
         if (this.timer > 0) return;
 
         for (var i = 0; i < this.entities.length; i++) {
-            this.entities[i].update(dt);
+            this.entities[i].update(dt * this.speedFactor);
         }
 
         if (this.hitCount === this.numEnemies) {
             this.currentLevel = this.currentLevel + 1;
+            var factor = Math.floor(this.currentLevel / 4.0);
+            this.speedFactor = 1.0 + 0.1 * factor;
             this.reset();
         }
 
