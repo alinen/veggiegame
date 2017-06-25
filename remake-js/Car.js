@@ -13,12 +13,12 @@ class Car extends Entity {
   
     moveLeft()
     {
-        this.vel.x = -800;
+        this.vel.x = -1600;
     }
 
     moveRight()
     {
-        this.vel.x = 800;
+        this.vel.x = 1600;
     }
   
     stop()

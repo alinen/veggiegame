@@ -234,7 +234,6 @@ class GameScreen extends Screen {
     }
 
     draw(ctx, assetMgr) {
-        //assetMgr.drawAsset(ctx, assetMgr.SCENE, 0, 0);
         for (var i = 0; i < this.entities.length; i++) {
             var entity = this.entities[i];
             if (!entity.visible) continue;
@@ -248,12 +247,12 @@ class GameScreen extends Screen {
         }
 
         if (this.timer > 0) {
-            ctx.font = '58px serif';
+            ctx.font = '100px Treasure';
             ctx.fontStyle = 'bold';
             ctx.fillStyle = '#000000';
             var message = 'Level '+(this.currentLevel+1);
             var metrics = ctx.measureText(message);
-            var height = Math.floor(assetMgr.height(assetMgr.TITLE_PAGE) * 0.5 );
+            var height = Math.floor(canvas.height * 0.4);
             var width = Math.floor((canvas.width-metrics.width)*0.5);
             ctx.fillText(message, width, height);        
         }

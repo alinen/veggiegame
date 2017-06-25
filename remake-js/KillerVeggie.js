@@ -2,7 +2,7 @@ class KillerVeggie extends Entity {
 
     constructor(type, worldW, worldH) {
         super(type, worldW, worldH);
-        this.speed = 500.0;
+        this.speed = 1000.0;
         this.gameType = this.ENEMY;
     }
 

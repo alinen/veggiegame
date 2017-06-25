@@ -3,7 +3,7 @@ class Missile extends Entity
     constructor(type, worldW, worldH) {
         super(type, worldW, worldH);
         this.visible = false;
-        this.vel.y = -1000;
+        this.vel.y = -2000;
     }
 
     reset() {

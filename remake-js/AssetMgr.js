@@ -56,26 +56,26 @@ class AssetMgr
             this.images[i] = null;
         }
 
-        this.load(this.SCENE, 'imgs/scene1.png');
-        this.load(this.BANDAID_H, 'imgs/band-aidHT.gif');
-        this.load(this.BANDAID_V, 'imgs/band-aidVT.gif');
-        this.load(this.BIGPEA_LEFT_CLOSED, 'imgs/bigPeaLeftClosedT.gif');
-        this.load(this.BIGPEA_LEFT_OPEN, 'imgs/bigPeaLeftOpenT.gif');
-        this.load(this.BIGPEA_RIGHT_OPEN, 'imgs/bigPeaRightOpenT.gif');
-        this.load(this.BIGPEA_RIGHT_CLOSED, 'imgs/bigPeaRightClosedT.gif');
-        this.load(this.BUILDINGS, 'imgs/buildingsT.png');
-        this.load(this.CAR, 'imgs/carT.gif');
-        this.load(this.EXPLOSION, "imgs/ExplosionT.png");
-        this.load(this.KILLER_BROCCOLI, "imgs/killerBroccoliT.gif");
-        this.load(this.KILLER_CARROT, "imgs/killerCarrotT.gif");
-        this.load(this.KILLER_EGGPLANT, "imgs/killerEggplantT.gif");
-        this.load(this.KILLER_HOTPEPPER, "imgs/killerHotpepperT.gif");
-        this.load(this.KILLER_ONION, "imgs/killerOnionT.gif");
-        this.load(this.KILLER_PEA, "imgs/killerPeaT.gif");
-        this.load(this.KILLER_TOMATO, "imgs/killerTomatoT.gif");
-        this.load(this.MISSILE, "imgs/missileT.gif");
+        this.load(this.SCENE, 'imgs/gBackground.png');
+        this.load(this.BANDAID_H, 'imgs/gBandaidH.png');
+        this.load(this.BANDAID_V, 'imgs/gBandaidV.png');
+        this.load(this.BIGPEA_LEFT_CLOSED, 'imgs/gBigPeaLeftClosed.png');
+        this.load(this.BIGPEA_LEFT_OPEN, 'imgs/gBigPeaLeftOpen.png');
+        this.load(this.BIGPEA_RIGHT_OPEN, 'imgs/gBigPeaRightOpen.png');
+        this.load(this.BIGPEA_RIGHT_CLOSED, 'imgs/gBigPeaRightClosed.png');
+        this.load(this.BUILDINGS, 'imgs/gBuildings.png');
+        this.load(this.CAR, 'imgs/gCar.png');
+        this.load(this.EXPLOSION, "imgs/gExplosion.png");
+        this.load(this.KILLER_BROCCOLI, "imgs/gBroccoli.png");
+        this.load(this.KILLER_CARROT, "imgs/gCarrot.png");
+        this.load(this.KILLER_EGGPLANT, "imgs/gEggplant.png");
+        this.load(this.KILLER_HOTPEPPER, "imgs/gHotpepper.png");
+        this.load(this.KILLER_ONION, "imgs/gOnion.png");
+        this.load(this.KILLER_PEA, "imgs/gPea.png");
+        this.load(this.KILLER_TOMATO, "imgs/gTomato.png");
+        this.load(this.MISSILE, "imgs/gMissile.png");
         this.load(this.TITLE_PAGE, "imgs/titlePage.png");
-        this.load(this.TITLE_TOMATO, 'imgs/demoTomatoT.png');
+        this.load(this.TITLE_TOMATO, 'imgs/gTitleTomato.png');
     }
 
     drawAsset(ctx, id, x, y, size) {
