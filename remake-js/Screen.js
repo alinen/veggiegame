@@ -28,7 +28,10 @@ class Screen {
     update(dt) {
     }
 
-    draw(ctx, assetMgr) {
+    draw(assetMgr) {
+    }
+
+    cleanup() {
     }
 }
 

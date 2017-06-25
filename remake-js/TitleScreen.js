@@ -13,13 +13,17 @@ class TitleScreen extends Screen {
         this.size = 0.1;
     }
 
+    cleanup() {
+        theAssetMgr.hide(theAssetMgr.TITLE_TOMATO);
+    }
+
     keyDown(e) {
         this.finished = true;
     }
 
     update(dt) {
-        this.pos.x += this.vel.x * dt * this.size * this.size;
-        this.pos.y += this.vel.y * dt * this.size * this.size;
+        this.pos.x += this.vel.x * dt /* * this.size * this.size*/;
+        this.pos.y += this.vel.y * dt /* * this.size * this.size*/;
         this.size += dt*2;        
 
         if (this.pos.x > this.width && this.pos.y > this.height) {
@@ -27,14 +31,10 @@ class TitleScreen extends Screen {
         }    
     }
 
-    draw(ctx, assetMgr) {
-        ctx.fillStyle = '#000000';
-        ctx.fillRect(0,0, canvas.width, canvas.height);
-        var w = (canvas.width - assetMgr.width(assetMgr.TITLE_PAGE)) * 0.5;
-        var h = (canvas.height - assetMgr.height(assetMgr.TITLE_PAGE)) * 0.5;
-        assetMgr.drawAsset(ctx, assetMgr.TITLE_PAGE, w, h);
-        assetMgr.drawAsset(ctx, assetMgr.TITLE_TOMATO, this.pos.x, this.pos.y, this.size);
+    draw(assetMgr) {
+        assetMgr.drawAsset(assetMgr.TITLE_TOMATO, this.pos.x, this.pos.y, this.size);
 
+        /*
         ctx.font = '14px serif';
         ctx.fontStyle = 'bold';
         ctx.fillStyle = '#FF0000';
@@ -43,6 +43,7 @@ class TitleScreen extends Screen {
 
         metrics = ctx.measureText(this.instructions);
         ctx.fillText(this.instructions, (canvas.width-metrics.width)*0.5, assetMgr.height(assetMgr.TITLE_PAGE)+5);
+        */
     }
 }
 

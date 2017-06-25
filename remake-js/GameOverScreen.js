@@ -18,9 +18,10 @@ class GameOverScreen extends Screen {
     update(dt) {
     }
 
-    draw(ctx, assetMgr) {
-        assetMgr.drawAsset(ctx, assetMgr.SCENE, 0, 0);
+    draw(assetMgr) {
+        assetMgr.drawAsset(assetMgr.SCENE, 0, 0);
 
+        /*
         ctx.font = '58px serif';
         ctx.fontStyle = 'bold';
         ctx.fillStyle = '#000000';
@@ -28,6 +29,7 @@ class GameOverScreen extends Screen {
         var height = Math.floor(assetMgr.height(assetMgr.TITLE_PAGE) * 0.5 );
         var width = Math.floor((canvas.width-metrics.width)*0.5);
         ctx.fillText(this.message, width, height);
+        */
     }
 }
 

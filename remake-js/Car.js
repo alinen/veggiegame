@@ -31,20 +31,5 @@ class Car extends Entity {
         this.pos.x = Math.min(this.worldWidth-this.width(), this.pos.x);
         this.pos.x = Math.max(0, this.pos.x);
     }
-
-  
-    /*
-    public function missileIntersects(target:GameObject):Boolean
-    {
-       for (var i:int = 0; i < 3; i++)
-       {
-          if (target.intersects(myMissiles[i]))
-          {
-             myMissiles[i].hit();
-             return true;
-          }
-       }
-       return false;
-    }*/
 }
   
