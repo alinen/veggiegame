@@ -247,7 +247,7 @@ class GameScreen extends Screen {
         }
 
         if (this.timer > 0) {
-            ctx.font = '100px Treasure';
+            ctx.font = assetMgr.FONT_SIZE_BIG + 'px Treasure';
             ctx.fontStyle = 'bold';
             ctx.fillStyle = '#000000';
             var message = 'Level '+(this.currentLevel+1);

@@ -24,6 +24,9 @@ class AssetMgr
         this.TITLE_PAGE = 19;
         this.NUM_IMAGES = 20;
 
+        this.FONT_SIZE_BIG = '100';
+        this.FONT_SIZE_SMALL = '20';
+
         this.images = new Array(this.NUM_IMAGES);
     }
 

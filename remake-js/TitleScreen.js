@@ -35,14 +35,14 @@ class TitleScreen extends Screen {
         assetMgr.drawAsset(ctx, assetMgr.TITLE_PAGE, w, h);
         assetMgr.drawAsset(ctx, assetMgr.TITLE_TOMATO, this.pos.x, this.pos.y, this.size);
 
-        ctx.font = '20px Treasure';
+        ctx.font = assetMgr.FONT_SIZE_SMALL + 'px Treasure';
         ctx.fontStyle = 'bold';
         ctx.fillStyle = '#FF0000';
         var metrics = ctx.measureText(this.message);
-        ctx.fillText(this.message, (canvas.width-metrics.width)*0.5, canvas.height-100);
+        ctx.fillText(this.message, (canvas.width-metrics.width)*0.5, canvas.height-50);
 
         metrics = ctx.measureText(this.instructions);
-        ctx.fillText(this.instructions, (canvas.width-metrics.width)*0.5, canvas.height-70);
+        ctx.fillText(this.instructions, (canvas.width-metrics.width)*0.5, canvas.height-25);
     }
 }
 

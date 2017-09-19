@@ -21,7 +21,7 @@ class GameOverScreen extends Screen {
     draw(ctx, assetMgr) {
         assetMgr.drawAsset(ctx, assetMgr.SCENE, 0, 0);
 
-        ctx.font = '100px Treasure';
+        ctx.font = assetMgr.FONT_SIZE_BIG + 'px Treasure';
         ctx.fontStyle = 'bold';
         ctx.fillStyle = '#000000';
         var metrics = ctx.measureText(this.message);

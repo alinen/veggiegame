@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Attack of the Killer Vegetables</title>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+<script type="text/javascript" src="AssetMgr.js"></script>
+<script type="text/javascript" src="AssetMgr98.js"></script>
+<script type="text/javascript" src="Screen.js"></script>
+<script type="text/javascript" src="TitleScreen.js"></script>
+<script type="text/javascript" src="GameScreen.js"></script>
+<script type="text/javascript" src="GameOverScreen.js"></script>
+<script type="text/javascript" src="Utils.js"></script>
+<script type="text/javascript" src="Entity.js"></script>
+<script type="text/javascript" src="KillerVeggie.js"></script>
+<script type="text/javascript" src="Car.js"></script>
+<script type="text/javascript" src="Missile.js"></script>
+<script type="text/javascript" src="Explosion.js"></script>
+<script type="text/javascript" src="Peapod.js"></script>
+<script type="text/javascript" src="KillerPea.js"></script>
+<script>
+var theAssetMgr = new AssetMgr98();
+var screens = new Array();
+var currentScreen = 0;
+var lastTime = 0;
+
+function tick() 
+{
+    var timeNow = new Date().getTime();
+    var dt = (timeNow - lastTime) * 0.0001;
+    lastTime = timeNow;
+
+    screens[currentScreen].update(dt);
+
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    screens[currentScreen].draw(ctx, theAssetMgr);
+
+    if (screens[currentScreen].finished) {
+        currentScreen = (currentScreen + 1) % screens.length;
+        screens[currentScreen].init();
+    }
+    
+    window.requestAnimationFrame(tick);
+}
+
+function handleKeyUp(e) {
+    // don't forget to disable vimfx!
+    screens[currentScreen].keyUp(e);
+}
+
+function handleKeyDown(e) {
+    // don't forget to disable vimfx!
+    screens[currentScreen].keyDown(e);
+}
+
+function handleMouseMove(e) {
+    screens[currentScreen].mouseMove(e);
+}
+
+function handleMouseDown(e) {
+    screens[currentScreen].mouseDown(e);
+}
+
+function launchGame() {
+    theAssetMgr.loadAssets();
+
+    var canvas = document.getElementById('canvas');
+
+    var titleScreen = new TitleScreen(canvas.width, canvas.height);
+    var gameScreen = new GameScreen(canvas.width, canvas.height);
+    var gameOverScreen = new GameOverScreen(canvas.width, canvas.height);
+
+    screens.push(titleScreen);
+    screens.push(gameScreen);
+    screens.push(gameOverScreen);
+    screens[currentScreen].init();
+
+    var ctx = canvas.getContext('2d');
+    screens[currentScreen].draw(ctx, theAssetMgr);
+
+    var background = document.getElementById('background');
+    background.style.visibility = 'visible';
+
+    lastTime = new Date().getTime();
+    window.addEventListener("keyup", handleKeyUp);
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousedown", handleMouseDown);
+    window.requestAnimationFrame(tick);
+}
+
+</script>
+</head>
+<body style="background:#000000;@font-face {
+    font-family: 'Treasure';
+    src: url('imgs/treasure/treasure.ttf');
+    src: local('Treasure') format('truetype');
+    font-weight: normal;
+    font-style: normal; }" onload="launchGame();">
+<img id="background" src="imgs98/scene1.png" style="position: absolute; top: 0px; left: 0px; visibility: hidden">
+<canvas id="canvas" width="349" height="307" style="position: absolute; top: 0px; left: 0px"></canvas>
+</body>
+</html>
+
