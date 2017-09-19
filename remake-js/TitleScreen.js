@@ -4,7 +4,7 @@ class TitleScreen extends Screen {
     constructor(width, height) {
         super(width, height);
         this.message = 'Press any key to begin';
-        this.instructions = 'Left/Right keys to move; Spacebar to shoot';
+        this.instructions = 'Left, Right keys to move; Spacebar to shoot';
     }
 
     _init() {
@@ -28,20 +28,21 @@ class TitleScreen extends Screen {
     }
 
     draw(ctx, assetMgr) {
-        ctx.clearRect(0,0, canvas.width, canvas.height);
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(0,0, canvas.width, canvas.height);
         var w = (canvas.width - assetMgr.width(assetMgr.TITLE_PAGE)) * 0.5;
         var h = (canvas.height - assetMgr.height(assetMgr.TITLE_PAGE)) * 0.5;
         assetMgr.drawAsset(ctx, assetMgr.TITLE_PAGE, w, h);
         assetMgr.drawAsset(ctx, assetMgr.TITLE_TOMATO, this.pos.x, this.pos.y, this.size);
 
-        ctx.font = '14px serif';
+        ctx.font = '20px Treasure';
         ctx.fontStyle = 'bold';
         ctx.fillStyle = '#FF0000';
         var metrics = ctx.measureText(this.message);
-        ctx.fillText(this.message, (canvas.width-metrics.width)*0.5, assetMgr.height(assetMgr.TITLE_PAGE)-20);
+        ctx.fillText(this.message, (canvas.width-metrics.width)*0.5, canvas.height-100);
 
         metrics = ctx.measureText(this.instructions);
-        ctx.fillText(this.instructions, (canvas.width-metrics.width)*0.5, assetMgr.height(assetMgr.TITLE_PAGE)+5);
+        ctx.fillText(this.instructions, (canvas.width-metrics.width)*0.5, canvas.height-70);
     }
 }
 

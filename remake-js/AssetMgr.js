@@ -3,27 +3,26 @@ class AssetMgr
 {
     constructor() {
         this.SCENE = 0;
-        this.BUILDINGS = 1;
-        this.BANDAID_H = 2;
-        this.BANDAID_V = 3;
-        this.BIGPEA_LEFT_CLOSED = 4;
-        this.BIGPEA_LEFT_OPEN = 5;
-        this.BIGPEA_RIGHT_OPEN = 6;
-        this.BIGPEA_RIGHT_CLOSED = 7;
-        this.BUILDINGS = 8;
-        this.CAR = 9;
-        this.EXPLOSION = 10;
-        this.KILLER_BROCCOLI = 11;
-        this.KILLER_CARROT = 12;
-        this.KILLER_EGGPLANT = 13;
-        this.KILLER_HOTPEPPER = 14;
-        this.KILLER_ONION = 15;
-        this.KILLER_PEA = 16;
-        this.KILLER_TOMATO = 17;
-        this.MISSILE = 18;
-        this.TITLE_TOMATO = 19;
-        this.TITLE_PAGE = 20;
-        this.NUM_IMAGES = 21;
+        this.BANDAID_H = 1;
+        this.BANDAID_V = 2;
+        this.BIGPEA_LEFT_CLOSED = 3;
+        this.BIGPEA_LEFT_OPEN = 4;
+        this.BIGPEA_RIGHT_OPEN = 5;
+        this.BIGPEA_RIGHT_CLOSED = 6;
+        this.BUILDINGS = 7;
+        this.CAR = 8;
+        this.EXPLOSION = 9;
+        this.KILLER_BROCCOLI = 10;
+        this.KILLER_CARROT = 11;
+        this.KILLER_EGGPLANT = 12;
+        this.KILLER_HOTPEPPER = 13;
+        this.KILLER_ONION = 14;
+        this.KILLER_PEA = 15;
+        this.KILLER_TOMATO = 16;
+        this.MISSILE = 17;
+        this.TITLE_TOMATO = 18;
+        this.TITLE_PAGE = 19;
+        this.NUM_IMAGES = 20;
 
         this.images = new Array(this.NUM_IMAGES);
     }
@@ -57,26 +56,26 @@ class AssetMgr
             this.images[i] = null;
         }
 
-        this.load(this.SCENE, 'imgs/scene1.png');
-        this.load(this.BANDAID_H, 'imgs/band-aidHT.gif');
-        this.load(this.BANDAID_V, 'imgs/band-aidVT.gif');
-        this.load(this.BIGPEA_LEFT_CLOSED, 'imgs/bigPeaLeftClosedT.gif');
-        this.load(this.BIGPEA_LEFT_OPEN, 'imgs/bigPeaLeftOpenT.gif');
-        this.load(this.BIGPEA_RIGHT_OPEN, 'imgs/bigPeaRightOpenT.gif');
-        this.load(this.BIGPEA_RIGHT_CLOSED, 'imgs/bigPeaRightClosedT.gif');
-        this.load(this.BUILDINGS, 'imgs/buildingsT.png');
-        this.load(this.CAR, 'imgs/carT.gif');
-        this.load(this.EXPLOSION, "imgs/ExplosionT.png");
-        this.load(this.KILLER_BROCCOLI, "imgs/killerBroccoliT.gif");
-        this.load(this.KILLER_CARROT, "imgs/killerCarrotT.gif");
-        this.load(this.KILLER_EGGPLANT, "imgs/killerEggplantT.gif");
-        this.load(this.KILLER_HOTPEPPER, "imgs/killerHotpepperT.gif");
-        this.load(this.KILLER_ONION, "imgs/killerOnionT.gif");
-        this.load(this.KILLER_PEA, "imgs/killerPeaT.gif");
-        this.load(this.KILLER_TOMATO, "imgs/killerTomatoT.gif");
-        this.load(this.MISSILE, "imgs/missileT.gif");
+        this.load(this.SCENE, 'imgs/gBackground.png');
+        this.load(this.BANDAID_H, 'imgs/gBandaidH.png');
+        this.load(this.BANDAID_V, 'imgs/gBandaidV.png');
+        this.load(this.BIGPEA_LEFT_CLOSED, 'imgs/gBigPeaLeftClosed.png');
+        this.load(this.BIGPEA_LEFT_OPEN, 'imgs/gBigPeaLeftOpen.png');
+        this.load(this.BIGPEA_RIGHT_OPEN, 'imgs/gBigPeaRightOpen.png');
+        this.load(this.BIGPEA_RIGHT_CLOSED, 'imgs/gBigPeaRightClosed.png');
+        this.load(this.BUILDINGS, 'imgs/gBuildings.png');
+        this.load(this.CAR, 'imgs/gCar.png');
+        this.load(this.EXPLOSION, "imgs/gExplosion.png");
+        this.load(this.KILLER_BROCCOLI, "imgs/gBroccoli.png");
+        this.load(this.KILLER_CARROT, "imgs/gCarrot.png");
+        this.load(this.KILLER_EGGPLANT, "imgs/gEggplant.png");
+        this.load(this.KILLER_HOTPEPPER, "imgs/gHotpepper.png");
+        this.load(this.KILLER_ONION, "imgs/gOnion.png");
+        this.load(this.KILLER_PEA, "imgs/gPea.png");
+        this.load(this.KILLER_TOMATO, "imgs/gTomato.png");
+        this.load(this.MISSILE, "imgs/gMissile.png");
         this.load(this.TITLE_PAGE, "imgs/titlePage.png");
-        this.load(this.TITLE_TOMATO, 'imgs/demoTomatoT.png');
+        this.load(this.TITLE_TOMATO, 'imgs/gTitleTomato.png');
     }
 
     drawAsset(ctx, id, x, y, size) {

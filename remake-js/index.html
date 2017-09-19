@@ -32,6 +32,7 @@ function tick()
 
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     screens[currentScreen].draw(ctx, theAssetMgr);
 
     if (screens[currentScreen].finished) {
@@ -74,6 +75,12 @@ function launchGame() {
     screens.push(gameOverScreen);
     screens[currentScreen].init();
 
+    var ctx = canvas.getContext('2d');
+    screens[currentScreen].draw(ctx, theAssetMgr);
+
+    var background = document.getElementById('background');
+    background.style.visibility = 'visible';
+
     lastTime = new Date().getTime();
     window.addEventListener("keyup", handleKeyUp);
     window.addEventListener("keydown", handleKeyDown);
@@ -84,30 +91,14 @@ function launchGame() {
 
 </script>
 </head>
-<body style="background:#000000" onload="launchGame();">
-<canvas id="canvas" width="349" height="307"></canvas>
-<!---
-<img src="imgs/scene1.png">
-<img id="band-aidH" src="imgs/band-aidHT.gif" style="visibility: hidden">
-<img id="band-aidV" src="imgs/band-aidVT.gif" style="visibility: hidden">
-<img id="bigPeaLeftOpen" src="imgs/bigPeaLeftClosedT.gif" style="visibility: hidden">
-<img id="bigPeaLeftClosed" src="imgs/bigPeaLeftOpenT.gif" style="visibility: hidden">
-<img id="bigPeaRightOpen" src="imgs/bigPeaRightOpenT.gif" style="visibility: hidden">
-<img id="bigPeaRightClosed" src="imgs/bigPeaRightClosedT.gif" style="visibility: hidden">
-<img id="buildings" src="imgs/buildingsT.png" style="visibility: hidden">
-<img id="car" src="imgs/carT.gif" style="visibility: hidden">
-<img id="explosion" src="imgs/ExplosionT.png" style="visibility: hidden">
-<img id="broccoli" src="imgs/killerBroccoliT.gif" style="visibility: hidden">
-<img id="carrot" src="imgs/killerCarrotT.gif" style="visibility: hidden">
-<img id="eggplant" src="imgs/killerEggplantT.gif" style="visibility: hidden">
-<img id="hotpepper" src="imgs/killerHotpepperT.gif" style="visibility: hidden">
-<img id="onion" src="imgs/killerOnionT.gif" style="visibility: hidden">
-<img id="pea" src="imgs/killerPeaT.gif" style="visibility: hidden">
-<img id="tomato" src="imgs/killerTomatoT.gif" style="visibility: hidden">
-<img id="missile" src="imgs/missileT.gif" style="visibility: hidden">
-<img id="title" src="imgs/titlePage.png" style="visibility: hidden">
-<img id="titleTomato" src="imgs/demoTomatoT.png" style="visibility: hidden">
---->
+<body style="background:#000000;@font-face {
+    font-family: 'Treasure';
+    src: url('imgs/treasure/treasure.ttf');
+    src: local('Treasure') format('truetype');
+    font-weight: normal;
+    font-style: normal; }" onload="launchGame();">
+<img id="background" src="imgs/gBackground.png" style="position: absolute; top: 0px; left: 0px; visibility: hidden">
+<canvas id="canvas" width="640" height="480" style="position: absolute; top: 0px; left: 0px"></canvas>
 </body>
 </html>
 

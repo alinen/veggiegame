@@ -2,7 +2,7 @@ class KillerVeggie extends Entity {
 
     constructor(type, worldW, worldH) {
         super(type, worldW, worldH);
-        this.speed = 500.0;
+        this.speed = 1000.0;
         this.gameType = this.ENEMY;
     }
 
@@ -19,10 +19,10 @@ class KillerVeggie extends Entity {
 
     _update(dt) {
         // Ensure speed stays below maximum
-        if (this.vel.y > 0 && this.pos.y+this.height > this.worldHeight) 
+        if (this.vel.y > 0 && this.pos.y+this.height() > this.worldHeight) 
         {
            this.vel.y = -this.vel.y; // reflect
-           this.y = this.worldHeight-this.height;
+           this.y = this.worldHeight-this.height();
         }
    
         if (this.vel.y < 0 && this.pos.y < 0)
@@ -31,10 +31,10 @@ class KillerVeggie extends Entity {
            this.pos.y = 0;
         }
    
-        if  (this.vel.x > 0 && this.pos.x + this.width > this.worldWidth)
+        if  (this.vel.x > 0 && this.pos.x + this.width() > this.worldWidth)
         {
            this.vel.x = -this.vel.x;
-           this.pos.x = this.worldWidth-this.width;
+           this.pos.x = this.worldWidth-this.width();
         }
         if (this.vel.x < 0 && this.pos.x < 0)
         {

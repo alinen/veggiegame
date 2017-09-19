@@ -33,7 +33,8 @@ class GameScreen extends Screen {
     }
 
     _init() {
-        this.carLives = 3;
+        this.speedFactor = 1.0;
+        this.carLives = 1;
         this.score = 0;
         this.currentLevel = 0;
         this.reset();
@@ -59,7 +60,7 @@ class GameScreen extends Screen {
         peapod.setCar(gs.car);
 
         var foreground = new Entity(theAssetMgr.BUILDINGS, gs.width, gs.height);
-        foreground.pos.y = gs.height - foreground.height;
+        foreground.pos.y = gs.height - foreground.height();
         gs.entities.push(foreground);
 
         var numEnemies = 0;
@@ -129,8 +130,8 @@ class GameScreen extends Screen {
   */    
     fireCannon()
     {
-        var x = this.car.pos.x + (this.car.width - this.missile.width) * 0.5;
-        var y = this.car.pos.y - this.missile.height;
+        var x = this.car.pos.x + (this.car.width() - this.missile.width()) * 0.5;
+        var y = this.car.pos.y - this.missile.height();
         this.missile.pos.x = x; 
         this.missile.pos.y = y; 
         this.missile.visible = true;
@@ -144,8 +145,8 @@ class GameScreen extends Screen {
 
     checkIntersections(entity) {
         var pos = entity.pos;
-        var width = entity.width;
-        var height = entity.height;
+        var width = entity.width();
+        var height = entity.height();
         var corner1 = {x: pos.x, y: pos.y };
         var corner2 = {x: pos.x+width, y:pos.y}; 
         var corner3 = {x: pos.x+width, y:pos.y+height}; 
@@ -158,8 +159,8 @@ class GameScreen extends Screen {
 
             // axis aligned bbox intersection test
             var posj = this.entities[j].pos;
-            var widthj = this.entities[j].width;
-            var heightj = this.entities[j].height;
+            var widthj = this.entities[j].width();
+            var heightj = this.entities[j].height();
 
             if (this.contains(corner1, posj, widthj, heightj) ||
                 this.contains(corner2, posj, widthj, heightj) ||
@@ -185,8 +186,8 @@ class GameScreen extends Screen {
         }
         explosion.reset();
         explosion.visible = true;
-        explosion.pos.x = entity.pos.x + (entity.width - explosion.width) * 0.5;
-        explosion.pos.y = entity.pos.y + (entity.height - explosion.height) * 0.5;
+        explosion.pos.x = entity.pos.x + (entity.width() - explosion.width()) * 0.5;
+        explosion.pos.y = entity.pos.y + (entity.height() - explosion.height()) * 0.5;
     }
 
     update(dt) {
@@ -194,11 +195,13 @@ class GameScreen extends Screen {
         if (this.timer > 0) return;
 
         for (var i = 0; i < this.entities.length; i++) {
-            this.entities[i].update(dt);
+            this.entities[i].update(dt * this.speedFactor);
         }
 
         if (this.hitCount === this.numEnemies) {
             this.currentLevel = this.currentLevel + 1;
+            var factor = Math.floor(this.currentLevel / 4.0);
+            this.speedFactor = 1.0 + 0.1 * factor;
             this.reset();
         }
 
@@ -231,7 +234,6 @@ class GameScreen extends Screen {
     }
 
     draw(ctx, assetMgr) {
-        assetMgr.drawAsset(ctx, assetMgr.SCENE, 0, 0);
         for (var i = 0; i < this.entities.length; i++) {
             var entity = this.entities[i];
             if (!entity.visible) continue;
@@ -245,12 +247,12 @@ class GameScreen extends Screen {
         }
 
         if (this.timer > 0) {
-            ctx.font = '58px serif';
+            ctx.font = '100px Treasure';
             ctx.fontStyle = 'bold';
             ctx.fillStyle = '#000000';
             var message = 'Level '+(this.currentLevel+1);
             var metrics = ctx.measureText(message);
-            var height = Math.floor(assetMgr.height(assetMgr.TITLE_PAGE) * 0.5 );
+            var height = Math.floor(canvas.height * 0.4);
             var width = Math.floor((canvas.width-metrics.width)*0.5);
             ctx.fillText(message, width, height);        
         }

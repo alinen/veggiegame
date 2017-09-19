@@ -1,3 +1,5 @@
+*.zip
+hide
 .svn
 *~
 *.swp
